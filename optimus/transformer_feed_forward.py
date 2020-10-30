@@ -24,14 +24,3 @@ class TransformerFeedForward(nn.Module):
 
         return x
 
-
-if __name__ == "__main__":
-    bs = 16
-    seq_len = 20
-    ms = 28
-
-    x = torch.randn(bs, seq_len, ms)
-    tff = TransformerFeedForward(ms, 1024)
-    out = tff.forward(x)
-
-    print(out.shape)
