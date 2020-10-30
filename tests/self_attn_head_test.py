@@ -7,16 +7,10 @@ import torch.nn as nn
 from assertpy import assert_that
 
 from optimus.self_attention_head import SelfAttentionHead
+from optimus.testing import OptimusTestCase
 
 
-class TestSelfAttention:
-    def _get_tensor_with_shape(self, *shape):
-        return torch.randn(*shape)
-
-    def assert_tensor_has_shape(self, tensor: torch.Tensor, shape: Tuple[int]):
-        assert_that(tensor).is_type_of(torch.Tensor)
-        assert_that(tensor.shape).is_equal_to(shape)
-
+class TestSelfAttentionHead(OptimusTestCase):
     @pytest.mark.parametrize(
         "batch_size,max_seq_len,model_size,keyvalue_size",
         [(16, 25, 30, 12), (1, 25, 30, 12)],
