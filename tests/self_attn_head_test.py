@@ -47,6 +47,6 @@ class TestSelfAttentionHead(OptimusTestCase):
         loss = criterion(y, result)
         loss.backward()
 
-        assert attn_head.W_q.grad is not None
-        assert attn_head.W_k.grad is not None
-        assert attn_head.W_v.grad is not None
+        self.assert_parameter_has_grad(attn_head.W_q)
+        self.assert_parameter_has_grad(attn_head.W_k)
+        self.assert_parameter_has_grad(attn_head.W_v)
