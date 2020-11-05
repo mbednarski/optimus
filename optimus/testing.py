@@ -3,6 +3,7 @@ from typing import Tuple
 import torch
 import torch.nn as nn
 from assertpy import assert_that
+from torch import Tensor
 
 
 class OptimusTestCase:
@@ -17,3 +18,8 @@ class OptimusTestCase:
         assert_that(parameter).is_type_of(nn.Parameter)
         assert_that(parameter.grad).is_not_none()
         assert_that(parameter.grad.sum().item()).is_not_zero()
+
+    def assert_tensor_does_not_require_grad(self, tensor: Tensor):
+        assert_that(tensor).is_type_of(Tensor)
+        assert_that(tensor).is_not_none()
+        assert_that(tensor.requires_grad).is_false()
