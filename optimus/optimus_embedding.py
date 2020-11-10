@@ -20,6 +20,6 @@ class OptimusEmbedding(nn.Module):
         pos = self.pos_embedding()
 
         # embedded with pos: batch size x seq len x model_size
-        embedded_with_pos = embedded + pos
+        embedded_with_pos = embedded + pos.to(embedded.device)
 
         return embedded_with_pos
