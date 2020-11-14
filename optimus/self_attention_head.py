@@ -2,9 +2,15 @@ import math
 
 import torch
 import torch.nn as nn
+from collections import namedtuple
 
+
+SelfAttentionOutput = namedtuple('SelfAttentionOutput', [
+    "z", "attention_map"
+])
 
 class SelfAttentionHead(nn.Module):
+
     def __init__(self, model_size: int, keyvalue_size: int) -> None:
         super().__init__()
         self.embedding_size = model_size
@@ -14,7 +20,7 @@ class SelfAttentionHead(nn.Module):
         self.W_k = nn.Parameter(torch.randn(model_size, keyvalue_size))
         self.W_v = nn.Parameter(torch.randn(model_size, keyvalue_size))
 
-    def forward(self, x):
+    def forward(self, x) ->SelfAttentionOutput:
         """Forwards self attn head
 
         Args:
@@ -29,4 +35,4 @@ class SelfAttentionHead(nn.Module):
         softmaxed = torch.softmax(dot_prod, dim=2)
         z = torch.matmul(softmaxed, v)
 
-        return z
+        return SelfAttentionOutput(z, softmaxed)

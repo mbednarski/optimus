@@ -18,11 +18,15 @@ class SelfAttention(nn.Module):
         # out shape seq len x embedding size
 
         head_values = []
+        head_maps = []
         for h in self.heads:
-            head_values.append(h(x))
+            out = h(x)
+            head_values.append(out.z)
+            head_maps.append(out.attention_map)
 
         head_values = torch.cat(head_values, dim=2)
+        head_maps = torch.stack(head_maps).permute(1,0,2,3)
 
         z = torch.matmul(head_values, self.WO)
 
-        return z
+        return z, head_maps

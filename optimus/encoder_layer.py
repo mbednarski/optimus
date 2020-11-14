@@ -31,9 +31,9 @@ class EncoderLayer(nn.Module):
         )
 
     def forward(self, x):
-        z1 = self.attention(x)
+        z1, attn_map = self.attention(x)
         z2 = self.add_and_normalize1(x, z1)
         ff_out = self.feed_forward(z2)
         out = self.add_and_normalize2(ff_out, z2)
 
-        return out
+        return out, attn_map
